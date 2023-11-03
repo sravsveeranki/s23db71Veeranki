@@ -1,0 +1,24 @@
+extends layout
+ 
+block content
+  h1= title
+  p The number of rows is: #{query.rows}
+  p The number of columns is: #{query.cols}
+  - let rows = Number(query.rows);
+  - let cols = Number(query.cols);
+ 
+  if Number.isInteger(rows) && Number.isInteger(cols) && rows >= 1 && rows <= 10 && cols >= 1 && cols <= 10
+    table#outer
+      - for (let i = 0; i < rows; i++)
+        tr
+          - for (let j = 0; j < cols; j++)
+            - if (i === j)
+              td= 1
+            - else if (i === j + 1)
+              td= 2
+            - else if (i === j - 1)
+              td= i
+            - else
+              td= 0
+  else
+    p Invalid input. Please provide rows and columns between 1 and 10.

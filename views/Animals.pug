@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  script.
+    function buy(index) {
+      alert("You Purchased Animals " + index);
+    } 
+  .container-fluid
+    .row
+      each Animals, index in results
+        .col-sm-4
+          .card
+            .card-body
+              h5.card-title AnimalName: #{Animals.AnimalName}
+              p.card-text AnimalType: #{Animals.AnimalType}
+              p.card-text AnimalColour: #{Animals.AnimalColour}
+              div 
+                button.btn.btn-primary(onclick=`buy(${index})`) Buy

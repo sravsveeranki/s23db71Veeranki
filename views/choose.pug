@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  - let image_names = images;
+  - for (let i = 0; i < 3; i++)
+    - let randomIndex = Math.floor(Math.random() * image_names.length);
+    - let selectedImage = image_names[randomIndex]
+    - image_names.splice(randomIndex,1)
+ 
+    img(src=`/images/${selectedImage}`, alt=`${selectedImage}`, width="300", height="300")
