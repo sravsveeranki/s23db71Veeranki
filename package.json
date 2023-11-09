@@ -15,5 +15,10 @@
     "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
-  }
+  },
+  "description": "Life is full of Miracles and Surprises\r [render URL](https://render-sravs2.onrender.com/)",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
