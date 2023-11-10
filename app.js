@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 const mongoose = require("mongoose");
 var resourceRouter = require('./routes/resource');
-var costumeRouter = require('./routes/costumes');
+var costumeRouter = require('./routes/animals');
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
 mongoose.connect(connectionString, {
@@ -23,50 +23,50 @@ db.once("open", function(){console.log("Connection to DB succeeded")})
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var AnimalsRouter = require('./routes/Animals');
+var AnimalsRouter = require('./routes/Animal');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
-var Costume = require("./models/costume");
+var animal = require("./models/animal");
 
 async function recreateDB(){
 
   // Delete everything
  
-  await Costume.deleteMany();
+  await animal.deleteMany();
  
-  let instance1 = new Costume(
+  let instance1 = new animal(
  
    {
  
-    costume_type: "Frozen",
+    AnimalName:"Cat",
  
-    size:'Large',
+    AnimalType:"mammal",
  
-    cost:15.4
+    AnimalColour:"gray"
  
    });
  
-   let instance2 = new Costume(
+   let instance2 = new animal(
  
     {
  
-     costume_type: "Cindrella",
+     AnimalName: "Eagle",
  
-     size: 'Medium',
+     AnimalType: "bird",
  
-     cost: 17.4
+     AnimalColour: "brown"
  
     });
  
-    let instance3 = new Costume(
+    let instance3 = new animal(
  
      {
  
-      costume_type: "Snowwhite",
+      AnimalName: "Turtle",
  
-      size: 'Extra Large',
+      AnimalType: "reptile",
  
-      cost: 20.5
+      AnimalColour: "green"
  
      });
  
@@ -107,11 +107,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/Animals', AnimalsRouter);
+app.use('/Animal', AnimalsRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
 app.use("/resource", resourceRouter);
-app.use('/costumes', costumeRouter);
+app.use('/Animals',AnimalsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
