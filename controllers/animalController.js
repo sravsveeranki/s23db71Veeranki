@@ -57,3 +57,57 @@ exports.animal_delete = function (req, res) {
 exports.animal_update_put = function (req, res) {
     res.send('NOT IMPLEMENTED: animal update PUT' + req.params.id);
 };
+
+// Handle Animal detail on GET.
+exports.animal_detail = async function (req, res) {
+    console.log("detail" + req.params.id)
+    try {
+        const foundanimal = await animal.findById(req.params.id);
+        if (foundanimal == null) {
+            res.status(404);
+            res.send(`{"error": "animal not found"}`);
+        } else {
+            res.send(foundanimal);
+        }
+    } catch (err) {
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
+};
+
+// Handle animal update form on PUT.
+exports.animal_update_put = async function(req, res) {
+    console.log(`Update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
+    try {
+        let toUpdate = await animal.findById(req.params.id);
+
+        // Check if the document exists
+        if (!toUpdate) {
+            res.status(404).send(`{"error": "animal with ID ${req.params.id} not found"}`);
+            return;
+        }
+
+        // Do updates of properties
+        if (req.body.AnimalName) toUpdate.AnimalName = req.body.AnimalName;
+        if (req.body.AnimalType) toUpdate.AnimalType = req.body.AnimalType;
+        if (req.body.AnimalColour) toUpdate.AnimalColour = req.body.AnimalColour;
+
+        // Handle checkbox (assuming it's named checkboxsale in the body)
+        if (req.body.checkboxsale) {
+            toUpdate.sale = true;
+        } else {
+            toUpdate.sale = false;
+        }
+
+        let result = await toUpdate.save();
+
+        // Include the sale property in the response
+        result = result.toObject(); // Convert Mongoose document to a plain JavaScript object
+        result.sale = toUpdate.sale;
+
+        console.log("Success " + result);
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
+};
