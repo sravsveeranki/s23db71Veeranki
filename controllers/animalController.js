@@ -126,13 +126,18 @@ exports.animal_delete = async function (req, res) {
 };
 
 
+
 // Handle a show one view with id specified by query
 exports.animal_view_one_Page = async function (req, res) {
     console.log("single view for id " + req.query.id)
     try {
-        result = await animal.findById(req.query.id)
-        res.render('animaldetail',
-            { title: 'animal Detail', toShow: result });
+        const result = await animal.findById(req.query.id)
+        if (!result) {
+            res.status(404)
+            res.send('Animal not found');
+            return;
+        }
+        res.render('animaldetail', { title: 'Animal Detail', toShow: result });
     }
     catch (err) {
         res.status(500)
@@ -154,19 +159,25 @@ exports.animal_create_Page = function (req, res) {
     }
 };
 
-// Handle building the view for updating a animal.
+// Handle building the view for updating an animal.
 // query provides the id
 exports.animal_update_Page = async function (req, res) {
     console.log("update view for item " + req.query.id)
     try {
-        let result = await animal.findById(req.query.id)
-        res.render('animalupdate', { title: 'animal Update', toShow: result });
+        const result = await animal.findById(req.query.id)
+        if (!result) {
+            res.status(404)
+            res.send('Animal not found');
+            return;
+        }
+        res.render('animalupdate', { title: 'Animal Update', toShow: result });
     }
     catch (err) {
         res.status(500)
         res.send(`{'error': '${err}'}`);
     }
 };
+
 
 // Handle a delete one view with id from query
 exports.animal_delete_Page = async function (req, res) {

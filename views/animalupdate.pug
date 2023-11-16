@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  
   h1= title
   -
     let animalid = toShow._id
@@ -18,35 +19,35 @@ block content
   form(id='animalForm', action= actionid, method="PUT")
     div.form-group
       label.animalAttr(for='AnimalName') Animal Name 
-      input#product_type(type='text', name='AnimalName', value= AnimalName )
+      input.outlined-input(type='text', name='AnimalName', value= AnimalName )
     div.form-group
       label.animalAttr(for='AnimalType') Animal Type
-      input#feature(type='text', name='AnimalType', value= AnimalType )
+      input.outlined-input(type='text', name='AnimalType', value= AnimalType )
     div.form-group
       label.animalAttr(for='AnimalColour') Animal Colour
-      input#cost(type='text', step='any', name='AnimalColour', value= AnimalColour )
+      input.outlined-input(type='text', step='any', name='AnimalColour', value= AnimalColour )
     input(type="submit")
   
-    script.
-      document.forms['animalForm'].addEventListener('submit', (event) => {
-        event.preventDefault();
-        // TODO do something here to show user that form is being submitted
-        fetch(event.target.action, {
-          method: 'PUT',
-          body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-        }).then((resp) => {
-          if (resp.ok){
-              alert('animal updated successfully')
-              document.getElementById("animalForm").reset()
-          }
-          else{
-              alert("failed to update animal")
-          }
-        }).then((body) => {
-          console.log(body);
-          // TODO handle body
-        }).catch((error) => {
-          // TODO handle error
-          alert("Update failed " + error )
-        });
+  script.
+    document.forms['animalForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        if (resp.ok){
+            alert('animal updated successfully')
+            document.getElementById("animalForm").reset()
+        }
+        else{
+            alert("failed to update animal")
+        }
+      }).then((body) => {
+        console.log(body);
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
       });
+    });

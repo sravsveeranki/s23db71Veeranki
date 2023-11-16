@@ -10,4 +10,13 @@ a {
 .animalAttr {
   background-color: aquamarine;
   width: 120px;
- }
+}
+
+
+.outlined-input {
+  border: 1px solid rgb(171, 86, 144);
+  padding: 25;
+  background-color: rgb(153, 197, 209);
+  outline: none;
+  padding: 20px;
+}
