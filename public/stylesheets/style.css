@@ -14,9 +14,24 @@ a {
 
 
 .outlined-input {
-  border: 1px solid rgb(171, 86, 144);
-  padding: 25;
-  background-color: rgb(153, 197, 209);
+  border: 2px dashed #ffcc00;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: #1a1a1d;
+  color: #ffcc00;
   outline: none;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.3s ease-in-out;
 }
+
+.outlined-input:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+}
+
+
+
+
