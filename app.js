@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 const mongoose = require("mongoose");
 var resourceRouter = require('./routes/resource');
-var costumeRouter = require('./routes/animals');
+var animalRouter = require('./routes/animal');
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
 mongoose.connect(connectionString, {
@@ -23,10 +23,11 @@ db.once("open", function(){console.log("Connection to DB succeeded")})
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var AnimalsRouter = require('./routes/Animal');
+var AnimalsRouter = require('./routes/Animals');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
 var animal = require("./models/animal");
+
 
 async function recreateDB(){
 

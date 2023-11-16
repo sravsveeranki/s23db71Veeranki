@@ -76,7 +76,7 @@ exports.animal_detail = async function (req, res) {
 };
 
 // Handle animal update form on PUT.
-exports.animal_update_put = async function(req, res) {
+exports.animal_update_put = async function (req, res) {
     console.log(`Update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
     try {
         let toUpdate = await animal.findById(req.params.id);
@@ -109,5 +109,77 @@ exports.animal_update_put = async function(req, res) {
         res.send(result);
     } catch (err) {
         res.status(500).send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
+};
+
+// Handle Animal delete on DELETE.
+exports.animal_delete = async function (req, res) {
+    console.log("delete " + req.params.id)
+    try {
+        result = await animal.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
+};
+
+
+// Handle a show one view with id specified by query
+exports.animal_view_one_Page = async function (req, res) {
+    console.log("single view for id " + req.query.id)
+    try {
+        result = await animal.findById(req.query.id)
+        res.render('animaldetail',
+            { title: 'animal Detail', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for creating a animal.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.animal_create_Page = function (req, res) {
+    console.log("create view")
+    try {
+        res.render('animalcreate', { title: 'animal Create' });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for updating a animal.
+// query provides the id
+exports.animal_update_Page = async function (req, res) {
+    console.log("update view for item " + req.query.id)
+    try {
+        let result = await animal.findById(req.query.id)
+        res.render('animalupdate', { title: 'animal Update', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle a delete one view with id from query
+exports.animal_delete_Page = async function (req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try {
+        result = await animal.findById(req.query.id)
+        res.render('animaldelete', {
+            title: 'animal Delete', toShow:
+                result
+        });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
     }
 };
