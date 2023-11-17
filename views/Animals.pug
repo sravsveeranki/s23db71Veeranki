@@ -1,6 +1,16 @@
-each item in theAnimals
-  div
-    p AnimalName - #{item.AnimalName}
-    p AnimalType - #{item.AnimalType}
-    p AnimalColour - #{item.AnimalColour}
-    br
+extends layout
+block content
+  h1= title
+  - let items = results;
+  each item in theAnimals
+    div
+      p AnimalName - #{item.AnimalName}
+      p AnimalType - #{item.AnimalType}
+      p AnimalColour - #{item.AnimalColour}
+      button.btn(class="btn-primary ml-1", onclick= destination) Update
+      br
+      br
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }
