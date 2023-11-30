@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title
-  form(id='', action="/resource/animals", method="POST")
+  form(id='animalForm', action="/resource/animals", method="POST")
     div.form-group
       label.animalAttr(for='AnimalName') Animal Name
       input#AnimalName(type='text', name='AnimalName')
@@ -17,17 +17,27 @@ block content
     script.
       document.forms['animalForm'].addEventListener('submit', (event) => {
         event.preventDefault();
-        // TODO do something here to show user that form is being submitted
+        let animalNameInput = document.getElementById('AnimalName').value;
+        let animalNameRegex = /^[A-Za-z]+$/; // Regular expression to match only letters
+        
+        if (!animalNameRegex.test(animalNameInput)) {
+          alert("Animal Name should contain only letters.");
+          return;
+        }
+        
+        // Proceed with form submission if the animal name is valid
+        // TODO: Add code to show user that form is being submitted
+        
         fetch(event.target.action, {
           method: 'POST',
           body: new URLSearchParams(new FormData(event.target)) // event.target is the form
         }).then((resp) => {
           return resp.json(); // or resp.text() or whatever the server sends
         }).then((body) => {
-          alert("Save succeeded")
-          // TODO handle body
+          alert("Save succeeded");
+          // TODO: handle body
         }).catch((error) => {
-          // TODO handle error
-          alert("Save failed " + error)
+          // TODO: handle error
+          alert("Save failed " + error);
         });
       });

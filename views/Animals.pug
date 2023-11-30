@@ -1,16 +1,27 @@
 extends layout
+
 block content
   h1= title
+  
   - let items = results;
-  each item in theAnimals
+
+  button.btn(class="btn-info", onclick=create) Add new Animal
+
+  each item in items
+    - let destination = `/animals/update?id=${item._id}`
+    - let detail = `/animals/detail/${item._id}` // Adjust the route as per your setup
+    - let deleteanimal = `/animals/delete/${item._id}` // Adjust the route as per your setup
+    
     div
       p AnimalName - #{item.AnimalName}
       p AnimalType - #{item.AnimalType}
       p AnimalColour - #{item.AnimalColour}
-      button.btn(class="btn-primary ml-1", onclick= destination) Update
-      br
-      br
+      
+      button.btn(class="btn-primary ml-1", onclick=`dispatch('${destination}')`) Update
+      button.btn(class="btn-success ml-1", onclick=`dispatch('${detail}')`) Details
+      button.btn(class="btn-dark ml-1", onclick=`dispatch('${deleteanimal}')`) Delete
+      
   script.
     function dispatch(path){
-      window.location.href=path
+      window.location.href = path;
     }
